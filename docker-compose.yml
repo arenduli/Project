@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    container_name: local_db
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: som
+      POSTGRES_USER: anita
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    networks:
+      - local-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: anita.rendulic@test.hr
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+networks:
+  local-network:
+
+volumes:
+  local_pgdata:
+  pgadmin-data:
